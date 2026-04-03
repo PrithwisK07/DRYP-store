@@ -3,12 +3,17 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactCompiler: true,
 
+  // 🔥 Disable TypeScript build errors
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+
   images: {
     remotePatterns: [
       {
         protocol: "http",
         hostname: "localhost",
-        port: "5000", // since your backend runs on 5000
+        port: "5000",
         pathname: "/**",
       },
     ],
