@@ -36,7 +36,7 @@ export default function DashboardLayout({
           <div>
             <div className="p-10 pb-16">
               <h2 className="font-editorial text-3xl italic tracking-[0.2em] text-[#FCFCFA]">
-                DR-YP
+                DRYP
               </h2>
               <p className="font-sans text-[8px] uppercase tracking-[0.4em] text-gray-500 mt-2">
                 Vendor Portal

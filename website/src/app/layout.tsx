@@ -16,7 +16,7 @@ const zaloga = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "DR-YP Vendor Hub",
+  title: "DRYP Vendor Hub",
   description: "Manage your products and sales.",
 };
 

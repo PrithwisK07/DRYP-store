@@ -106,7 +106,7 @@ export default function LoginPage() {
 
           <div className="absolute inset-0 flex flex-col justify-between p-12 text-white">
             <h1 className="font-editorial text-3xl italic tracking-[0.2em] text-white/90">
-              DR-YP
+              DRYP
             </h1>
 
             <div className="max-w-lg space-y-2">
@@ -133,7 +133,7 @@ export default function LoginPage() {
         <div className="flex h-full w-full flex-col justify-center px-8 sm:px-16 md:px-24 lg:w-1/2 relative overflow-y-auto">
           <div className="mb-8 block lg:hidden text-center">
             <h1 className="font-editorial text-3xl italic tracking-[0.2em] text-black">
-              DR-YP
+              DRYP
             </h1>
           </div>
 
