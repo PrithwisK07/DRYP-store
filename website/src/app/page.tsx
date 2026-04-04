@@ -88,11 +88,6 @@ export default function LandingPage() {
           50% { transform: translateY(-10px) rotate(-3deg); }
         }
 
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-100%); }
-        }
-
         /* Animation Classes */
         .animate-blob { animation: blobBounce 25s infinite ease-in-out; }
         .animation-delay-2000 { animation-delay: 2s; }
@@ -115,37 +110,37 @@ export default function LandingPage() {
         }}
       />
 
-      {/* Custom Animated Cursor (Now layered WITH the regular cursor) */}
+      {/* Custom Animated Cursor */}
       <div 
         className="pointer-events-none fixed left-0 top-0 z-[100] hidden items-center justify-center mix-blend-difference transition-transform duration-300 ease-out md:flex"
         style={{ 
           transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0) translate(-50%, -50%) scale(${isHovering ? 2 : 1.2})` 
         }}
       >
-        <div className={`flex h-8 w-8 items-center justify-center rounded-full border border-[#F6F5F2] transition-colors duration-300 ${isHovering ? 'bg-[#F6F5F2]' : 'bg-transparent'}`}>
-          <div className={`h-1 w-1 rounded-full bg-[#F6F5F2] transition-opacity duration-300 ${isHovering ? 'opacity-0' : 'opacity-100'}`} />
+        <div className={`flex h-8 w-8 items-center justify-center rounded-full border border-white transition-colors duration-300 ${isHovering ? 'bg-white' : 'bg-transparent'}`}>
+          <div className={`h-1 w-1 rounded-full bg-white transition-opacity duration-300 ${isHovering ? 'opacity-0' : 'opacity-100'}`} />
         </div>
       </div>
 
-      {/* Main Wrapper */}
-      <div className="relative flex min-h-screen w-full flex-col text-[#1A1A1A] selection:bg-[#C2B6A5] selection:text-[#1A1A1A] overflow-x-hidden font-sans z-0 bg-gradient-to-br from-[#F6F5F2] via-[#EAE5DB] to-[#DFD8CC]">
+      {/* Main Wrapper - Black & White Theme */}
+      <div className="relative flex min-h-screen w-full flex-col text-black selection:bg-gray-300 selection:text-black overflow-x-hidden font-sans z-0 bg-gradient-to-br from-white via-gray-100 to-gray-200">
         
         {/* Noise Overlay */}
         <div className="absolute inset-0 pointer-events-none z-0 bg-noise mix-blend-overlay opacity-60 fixed"></div>
 
         {/* Dynamic Background Blobs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 fixed">
-          <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-[#D2C8BA] mix-blend-multiply filter blur-[120px] opacity-70 animate-blob" />
-          <div className="absolute top-[20%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-[#C2B6A5] mix-blend-multiply filter blur-[140px] opacity-60 animate-blob animation-delay-2000" />
-          <div className="absolute bottom-[-10%] left-[30%] w-[60vw] h-[60vw] rounded-full bg-[#DED6C8] mix-blend-multiply filter blur-[160px] opacity-80 animate-blob animation-delay-4000" />
+          <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-gray-300 mix-blend-multiply filter blur-[120px] opacity-70 animate-blob" />
+          <div className="absolute top-[20%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-gray-400 mix-blend-multiply filter blur-[140px] opacity-60 animate-blob animation-delay-2000" />
+          <div className="absolute bottom-[-10%] left-[30%] w-[60vw] h-[60vw] rounded-full bg-gray-200 mix-blend-multiply filter blur-[160px] opacity-80 animate-blob animation-delay-4000" />
         </div>
 
         {/* =========================================
             NAVIGATION
         ========================================= */}
-        <header className="fixed top-0 z-50 flex w-full items-center justify-between px-6 py-6 md:px-12 backdrop-blur-md bg-white/20 border-b border-[#1A1A1A]/5 transition-all duration-500">
+        <header className="fixed top-0 z-50 flex w-full items-center justify-between px-6 py-6 md:px-12 backdrop-blur-md bg-white/20 border-b border-black/5 transition-all duration-500">
           <div 
-            className="font-editorial text-2xl tracking-[0.15em] uppercase text-[#1A1A1A]"
+            className="font-editorial text-2xl tracking-[0.15em] uppercase text-black"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
           >
@@ -155,7 +150,7 @@ export default function LandingPage() {
           <div className="flex items-center gap-12">
             <Link
               href="/login"
-              className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#1A1A1A] transition-all hover:tracking-[0.3em] hover:text-[#A69076]"
+              className="text-[10px] font-medium uppercase tracking-[0.2em] text-black transition-all hover:tracking-[0.3em] hover:text-gray-500"
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
             >
@@ -170,82 +165,85 @@ export default function LandingPage() {
         <section className="relative flex min-h-[90vh] w-full flex-col items-center justify-center pt-28 pb-12 px-6 md:flex-row md:px-12 md:pt-24 overflow-hidden">
           
           <div className="absolute inset-0 z-0 flex pointer-events-none">
-            <div className="w-full md:w-5/12 bg-[#FAF8F5]" />
-            <div className="hidden md:block md:w-7/12 bg-[#EAE5DB]/40 backdrop-blur-sm border-l border-[#D2C8BA]/30" />
+            <div className="w-full md:w-5/12 bg-gray-50" />
+            <div className="hidden md:block md:w-7/12 bg-gray-100/40 backdrop-blur-sm border-l border-gray-300/50" />
           </div>
 
           <div className="relative z-10 flex w-full flex-col justify-center md:w-5/12 md:pr-12">
             <div className="mb-8 flex items-center gap-3 animate-fade-up">
-              <div className="h-px w-8 bg-[#A69076]/50" />
-              <p className="text-[9px] font-medium uppercase tracking-[0.4em] text-[#5C5248]">
+              <div className="h-px w-8 bg-gray-400" />
+              <p className="text-[9px] font-medium uppercase tracking-[0.4em] text-gray-500">
                 Curation Engine
               </p>
             </div>
             
             <h1 className="font-editorial text-[3.5rem] font-light leading-[1] tracking-tight sm:text-[4.5rem] lg:text-[6.5rem]">
               <span className="block animate-fade-up delay-100">Curate</span>
-              <span className="font-cursive text-[4rem] leading-[0.6] text-[#A69076] sm:text-[5.5rem] lg:text-[7.5rem] lowercase -ml-4 block py-2 animate-fade-up delay-200">
+              <span className="font-cursive text-[4rem] leading-[0.6] text-gray-600 sm:text-[5.5rem] lg:text-[7.5rem] lowercase -ml-4 block py-2 animate-fade-up delay-200">
                 your unique
               </span>
               <span className="block animate-fade-up delay-300">Archive.</span>
             </h1>
             
-            <p className="mt-8 max-sm:text-[11px] font-light leading-relaxed tracking-[0.15em] uppercase text-[#5C5248] animate-fade-up delay-300">
+            <p className="mt-8 max-sm:text-[11px] font-light leading-relaxed tracking-[0.15em] uppercase text-gray-500 animate-fade-up delay-300">
               The anti-scroll fashion platform. Instantly discover global designer archives and curate the ultimate digital wishlist with a single gesture.
             </p>
 
             <div className="mt-10 animate-fade-up delay-500">
               <Link
                 href="/signup"
-                className="group relative inline-flex items-center gap-6 overflow-hidden border border-[#A69076]/40 bg-white/40 backdrop-blur-md px-8 py-4 transition-all duration-700 hover:border-[#1A1A1A] shadow-lg shadow-[#1A1A1A]/5"
+                className="group relative inline-flex items-center gap-6 overflow-hidden border border-gray-300 bg-white/40 backdrop-blur-md px-8 py-4 transition-all duration-700 hover:border-black shadow-lg shadow-black/5"
                 onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
               >
-                <div className="absolute inset-0 w-0 bg-[#1A1A1A] transition-all duration-700 ease-[cubic-bezier(0.87,0,0.13,1)] group-hover:w-full" />
-                <span className="relative z-10 text-[10px] font-medium uppercase tracking-[0.3em] text-[#1A1A1A] transition-colors duration-500 group-hover:text-white">
+                <div className="absolute inset-0 w-0 bg-black transition-all duration-700 ease-[cubic-bezier(0.87,0,0.13,1)] group-hover:w-full" />
+                <span className="relative z-10 text-[10px] font-medium uppercase tracking-[0.3em] text-black transition-colors duration-500 group-hover:text-white">
                   Begin Discovery
                 </span>
               </Link>
             </div>
           </div>
 
-          <div className="relative mt-16 flex w-full items-center justify-center md:mt-0 md:w-7/12 md:h-[600px] animate-fade-up delay-300">
+          <div className="relative mt-12 flex w-full h-[380px] md:h-[600px] items-center justify-center md:mt-0 md:w-7/12 animate-fade-up delay-300">
             
-            <div className="absolute right-[10%] top-[5%] h-[280px] w-[200px] md:h-[340px] md:w-[240px] overflow-hidden opacity-70 animate-float-slower shadow-lg">
-              <div className="h-full w-full overflow-hidden border border-[#D2C8BA]/30 bg-[#EAE5DB]">
+            {/* Back Image */}
+            <div className="absolute right-0 top-0 h-[180px] w-[120px] md:right-[10%] md:top-[5%] md:h-[340px] md:w-[240px] overflow-hidden opacity-70 animate-float-slower shadow-lg">
+              <div className="h-full w-full overflow-hidden border border-gray-300/50 bg-gray-100">
                 <img 
                   src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1000&auto=format&fit=crop" 
                   alt="High fashion editorial back"
-                  className="h-full w-full object-cover scale-110 transition-transform duration-[20s] ease-out hover:scale-100 mix-blend-multiply opacity-90"
+                  className="h-full w-full object-cover scale-110   transition-all duration-700 ease-out mix-blend-multiply opacity-90"
                 />
               </div>
             </div>
 
-            <div className="absolute right-[25%] top-[15%] h-[320px] w-[220px] md:h-[380px] md:w-[260px] overflow-hidden opacity-95 animate-float-slow shadow-xl shadow-[#1A1A1A]/10 z-10">
-              <div className="h-full w-full overflow-hidden border border-white/50 bg-[#F6F5F2]">
+            {/* Mid Image */}
+            <div className="absolute right-[15%] top-[15%] h-[220px] w-[150px] md:right-[25%] md:top-[15%] md:h-[380px] md:w-[260px] overflow-hidden opacity-95 animate-float-slow shadow-xl shadow-black/10 z-10">
+              <div className="h-full w-full overflow-hidden border border-white/50 bg-white">
                 <img 
                   src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1000&auto=format&fit=crop" 
                   alt="Avant garde clothing mid"
-                  className="h-full w-full object-cover transition-transform duration-[15s] ease-out hover:scale-110"
+                  className="h-full w-full object-cover   transition-all duration-700 ease-out hover:scale-105"
                 />
               </div>
             </div>
 
-            <div className="absolute z-20 h-[380px] w-[260px] md:h-[460px] md:w-[320px] left-[15%] top-[10%] shadow-2xl shadow-[#1A1A1A]/20 animate-float-fast">
-              <div className="h-full w-full overflow-hidden border border-white/60 bg-[#F6F5F2]">
+            {/* Front Image */}
+            <div className="absolute z-20 left-[5%] top-[10%] h-[260px] w-[180px] md:h-[460px] md:w-[320px] md:left-[15%] md:top-[10%] shadow-2xl shadow-black/20 animate-float-fast">
+              <div className="h-full w-full overflow-hidden border border-white/60 bg-white">
                 <img 
                   src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1000&auto=format&fit=crop" 
                   alt="Avant garde clothing front"
-                  className="h-full w-full object-cover transition-transform duration-[15s] ease-out hover:scale-110"
+                  className="h-full w-full object-cover   transition-all duration-700 ease-out hover:scale-105"
                 />
               </div>
               
               <div 
-                className="absolute -bottom-5 -right-5 backdrop-blur-xl bg-white/90 px-5 py-3 border border-[#D2C8BA]/50 shadow-lg group transition-all duration-500 hover:bg-[#1A1A1A]"
+                className="absolute -bottom-4 -right-4 md:-bottom-5 md:-right-5 backdrop-blur-xl bg-white/90 px-4 py-2 md:px-5 md:py-3 border border-gray-300/50 shadow-lg group transition-all duration-500 hover:bg-black"
                 onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
               >
-                <span className="text-[8px] md:text-[9px] uppercase tracking-[0.3em] text-[#1A1A1A] font-medium transition-colors duration-500 group-hover:text-[#F6F5F2]">
+                <span className="text-[7px] md:text-[9px] uppercase tracking-[0.3em] text-black font-medium transition-colors duration-500 group-hover:text-white">
                   SS26 / Selected
                 </span>
               </div>
@@ -255,59 +253,45 @@ export default function LandingPage() {
         </section>
 
         {/* =========================================
-            VALUE PROP MARQUEE
-        ========================================= */}
-        <section className="border-y border-[#8C7C6D] bg-[#8C7C6D] py-6 overflow-hidden relative z-10">
-          <div className="flex whitespace-nowrap opacity-100">
-            <h2 className="font-editorial italic text-xl tracking-[0.1em] text-[#F6F5F2] px-4 shrink-0 animate-[marquee_30s_linear_infinite]">
-              THE ULTIMATE DIGITAL SHOWROOM <span className="mx-12 font-sans text-xs not-italic tracking-widest text-[#D2C8BA]">✦</span> YOUR NEXT SIGNATURE PIECE <span className="mx-12 font-sans text-xs not-italic tracking-widest text-[#D2C8BA]">✦</span> CURATE WITHOUT COMPROMISE <span className="mx-12 font-sans text-xs not-italic tracking-widest text-[#D2C8BA]">✦</span>
-            </h2>
-            <h2 className="font-editorial italic text-xl tracking-[0.1em] text-[#F6F5F2] px-4 shrink-0 animate-[marquee_30s_linear_infinite]">
-              THE ULTIMATE DIGITAL SHOWROOM <span className="mx-12 font-sans text-xs not-italic tracking-widest text-[#D2C8BA]">✦</span> YOUR NEXT SIGNATURE PIECE <span className="mx-12 font-sans text-xs not-italic tracking-widest text-[#D2C8BA]">✦</span> CURATE WITHOUT COMPROMISE <span className="mx-12 font-sans text-xs not-italic tracking-widest text-[#D2C8BA]">✦</span>
-            </h2>
-          </div>
-        </section>
-
-        {/* =========================================
             FEATURES SECTION
         ========================================= */}
-        <div className="w-full bg-white relative z-10 border-b border-[#D2C8BA]/50">
+        <div className="w-full bg-white relative z-10 border-b border-gray-300/50 border-t">
           <section className="py-24 px-6 md:px-12 w-full max-w-screen-2xl mx-auto cursor-default">
             <div className="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
-              <h2 className="font-editorial text-4xl md:text-6xl font-light tracking-tight text-[#1A1A1A]">
-                The <span className="font-cursive text-5xl md:text-7xl text-[#A69076] lowercase -ml-2">Interface</span>
+              <h2 className="font-editorial text-4xl md:text-6xl font-light tracking-tight text-black">
+                The <span className="font-cursive text-5xl md:text-7xl text-gray-700 lowercase -ml-2">Interface</span>
               </h2>
-              <p className="text-[10px] font-light uppercase tracking-[0.2em] text-[#5C5248] max-w-xs leading-relaxed">
+              <p className="text-[10px] font-light uppercase tracking-[0.2em] text-gray-500 max-w-xs leading-relaxed">
                 Designed for rapid discovery and intuitive curation. We handle the noise, you define the style.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 border-t border-[#D2C8BA]/50">
-              <div className="group flex flex-col justify-between p-8 md:p-12 border-b md:border-b-0 md:border-r border-[#D2C8BA]/50 transition-colors duration-700 hover:bg-[#F6F5F2]">
-                <div className="mb-20 font-editorial italic text-5xl text-[#D2C8BA] transition-all duration-700 group-hover:text-[#8C775D] group-hover:-translate-y-2">01</div>
+            <div className="grid grid-cols-1 md:grid-cols-3 border-t border-gray-300/50">
+              <div className="group flex flex-col justify-between p-8 md:p-12 border-b md:border-b-0 md:border-r border-gray-300/50 transition-colors duration-700 hover:bg-gray-50">
+                <div className="mb-20 font-editorial italic text-5xl text-gray-300 transition-all duration-700 group-hover:text-gray-500 group-hover:-translate-y-2">01</div>
                 <div>
-                  <h3 className="mb-4 text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A1A1A]">Rapid Fire</h3>
-                  <p className="text-[12px] font-light leading-relaxed text-[#5C5248]">
+                  <h3 className="mb-4 text-[11px] font-bold uppercase tracking-[0.3em] text-black">Rapid Fire</h3>
+                  <p className="text-[12px] font-light leading-relaxed text-gray-500">
                     React instantly to global designer collections in our seamless, full-screen feed. Each piece is an opportunity. A swipe is a decision.
                   </p>
                 </div>
               </div>
 
-              <div className="group flex flex-col justify-between p-8 md:p-12 border-b md:border-b-0 md:border-r border-[#D2C8BA]/50 transition-colors duration-700 hover:bg-[#F6F5F2]">
-                <div className="mb-20 font-editorial italic text-5xl text-[#D2C8BA] transition-all duration-700 group-hover:text-[#8C775D] group-hover:-translate-y-2">02</div>
+              <div className="group flex flex-col justify-between p-8 md:p-12 border-b md:border-b-0 md:border-r border-gray-300/50 transition-colors duration-700 hover:bg-gray-50">
+                <div className="mb-20 font-editorial italic text-5xl text-gray-300 transition-all duration-700 group-hover:text-gray-500 group-hover:-translate-y-2">02</div>
                 <div>
-                  <h3 className="mb-4 text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A1A1A]">The Vault</h3>
-                  <p className="text-[12px] font-light leading-relaxed text-[#5C5248]">
+                  <h3 className="mb-4 text-[11px] font-bold uppercase tracking-[0.3em] text-black">The Vault</h3>
+                  <p className="text-[12px] font-light leading-relaxed text-gray-500">
                     Your profile is your digital archive. Organize your likes into personalized lookbooks, creating highly specific wishlists for every occasion.
                   </p>
                 </div>
               </div>
 
-              <div className="group flex flex-col justify-between p-8 md:p-12 transition-colors duration-700 hover:bg-[#F6F5F2]">
-                <div className="mb-20 font-editorial italic text-5xl text-[#D2C8BA] transition-all duration-700 group-hover:text-[#8C775D] group-hover:-translate-y-2">03</div>
+              <div className="group flex flex-col justify-between p-8 md:p-12 transition-colors duration-700 hover:bg-gray-50">
+                <div className="mb-20 font-editorial italic text-5xl text-gray-300 transition-all duration-700 group-hover:text-gray-500 group-hover:-translate-y-2">03</div>
                 <div>
-                  <h3 className="mb-4 text-[11px] font-bold uppercase tracking-[0.3em] text-[#1A1A1A]">Algorithm</h3>
-                  <p className="text-[12px] font-light leading-relaxed text-[#5C5248]">
+                  <h3 className="mb-4 text-[11px] font-bold uppercase tracking-[0.3em] text-black">Algorithm</h3>
+                  <p className="text-[12px] font-light leading-relaxed text-gray-500">
                     DRYP learns your visual language. As you swipe, the algorithm refines its understanding, delivering increasingly accurate style matches.
                   </p>
                 </div>
@@ -319,11 +303,11 @@ export default function LandingPage() {
         {/* =========================================
             LIVE SWIPE DEMO SECTION
         ========================================= */}
-        <div className="w-full bg-[#E5DFD3] relative z-10 border-b border-[#D2C8BA]/50">
+        <div className="w-full bg-gray-100 relative z-10 border-b border-gray-300/50">
           <section className="py-32 px-6 md:px-12 w-full overflow-hidden">
             
             <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/4 opacity-[0.03] pointer-events-none">
-              <span className="font-editorial text-[25vw] italic text-[#5C5248] whitespace-nowrap">
+              <span className="font-editorial text-[25vw] italic text-black whitespace-nowrap">
                 React
               </span>
             </div>
@@ -332,31 +316,53 @@ export default function LandingPage() {
               
               <div className="w-full lg:w-4/12 flex flex-col text-center lg:text-left">
                 <div className="mb-8 flex items-center justify-center lg:justify-start gap-4">
-                  <span className="text-2xl text-[#A69076]">✦</span>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#5C5248]">Signal Over Noise</p>
+                  <span className="text-2xl text-gray-500">✦</span>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500">Signal Over Noise</p>
                 </div>
-                <h2 className="font-editorial text-5xl md:text-7xl lg:text-[5.5rem] font-light tracking-tight text-[#1A1A1A] mb-8 leading-[1.1]">
+                <h2 className="font-editorial text-5xl md:text-7xl lg:text-[5.5rem] font-light tracking-tight text-black mb-8 leading-[1.1]">
                   React. <br/>
-                  <span className="font-cursive text-6xl md:text-8xl lg:text-[7.5rem] text-[#8C775D] lowercase leading-[0.5] block py-4">Instantly.</span>
+                  <span className="font-cursive text-6xl md:text-8xl lg:text-[7.5rem] text-gray-700 lowercase leading-[0.5] block py-4">Instantly.</span>
                 </h2>
-                <p className="text-[12px] font-light leading-relaxed text-[#5C5248] max-w-md mx-auto lg:mx-0">
+                <p className="text-[12px] font-light leading-relaxed text-gray-500 max-w-md mx-auto lg:mx-0">
                   A decisive swipe right archives the piece directly to your vault. Swipe left to pass. No carts, no infinite grids. Just instinctual selection building your definitive style profile.
                 </p>
               </div>
 
               <div className="w-full lg:w-8/12 flex items-center justify-center gap-6 xl:gap-12 relative mt-10 lg:mt-0">
                 
+                {/* Desktop Pass Arrow */}
                 <div className="hidden lg:flex flex-col items-center gap-4 opacity-80 z-20 transition-all duration-300">
-                  <svg width="100" height="46" viewBox="0 0 60 28" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" className={`text-[#8C775D] transition-transform duration-500 ${isSwipingOut && swipeDirection === 'left' ? '-translate-x-6 scale-110' : ''}`}>
+                  <svg width="100" height="46" viewBox="0 0 60 28" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" className={`text-gray-600 transition-transform duration-500 ${isSwipingOut && swipeDirection === 'left' ? '-translate-x-6 scale-110' : ''}`}>
                     <path d="M50 24 C 35 24, 18 18, 6 8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M6 8 L 18 6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M6 8 L 8 20" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                  <span className={`font-cursive text-4xl text-[#5C5248] transition-opacity duration-500 ${isSwipingOut && swipeDirection === 'left' ? 'opacity-100' : 'opacity-60'}`}>Pass</span>
+                  <span className={`font-cursive text-4xl text-gray-600 transition-opacity duration-500 ${isSwipingOut && swipeDirection === 'left' ? 'opacity-100' : 'opacity-60'}`}>Pass</span>
                 </div>
 
-                <div className="flex justify-center perspective-[1200px] h-[550px] md:h-[650px] relative w-full max-w-[400px]">
-                  <div className="relative w-[300px] md:w-[400px] h-[450px] md:h-[550px] top-1/2 -translate-y-1/2">
+                <div className="flex justify-center perspective-[1200px] h-[480px] md:h-[650px] relative w-full max-w-[400px]">
+                  
+                  {/* Mobile Pass Overlay */}
+                  <div className={`absolute left-0 top-1/2 -translate-y-1/2 flex lg:hidden flex-col items-center gap-2 z-40 transition-opacity duration-500 pointer-events-none ${isSwipingOut && swipeDirection === 'left' ? 'opacity-100' : 'opacity-30'}`}>
+                      <svg width="40" height="20" viewBox="0 0 60 28" fill="none" stroke="currentColor" className="text-gray-700">
+                        <path d="M50 24 C 35 24, 18 18, 6 8" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M6 8 L 18 6" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M6 8 L 8 20" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <span className="font-cursive text-2xl text-gray-700">Pass</span>
+                  </div>
+
+                  {/* Mobile Archive Overlay */}
+                  <div className={`absolute right-0 top-1/2 -translate-y-1/2 flex lg:hidden flex-col items-center gap-2 z-40 transition-opacity duration-500 pointer-events-none ${isSwipingOut && swipeDirection === 'right' ? 'opacity-100' : 'opacity-30'}`}>
+                      <svg width="40" height="20" viewBox="0 0 60 28" fill="none" stroke="currentColor" className="text-gray-700">
+                        <path d="M10 24 C 25 24, 42 18, 54 8" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M54 8 L 42 6" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M54 8 L 52 20" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <span className="font-cursive text-2xl text-gray-700">Archive</span>
+                  </div>
+
+                  <div className="relative w-[260px] md:w-[400px] h-[380px] md:h-[550px] top-1/2 -translate-y-1/2">
                     
                     {demoImages.map((img, index) => {
                       const stackIndex = (index - activeSwipeIndex + demoImages.length) % demoImages.length;
@@ -397,20 +403,20 @@ export default function LandingPage() {
                       return (
                         <div
                           key={img}
-                          className={`absolute inset-0 transition-all duration-[1200ms] ease-[cubic-bezier(0.25,1,0.35,1)] bg-[#F6F5F2] overflow-hidden p-3 md:p-4 border border-white/60 origin-bottom ${cardStyle}`}
+                          className={`absolute inset-0 transition-all duration-[1200ms] ease-[cubic-bezier(0.25,1,0.35,1)] bg-white overflow-hidden p-2 md:p-4 border border-gray-200 origin-bottom ${cardStyle}`}
                         >
                           <div className="w-full h-full relative overflow-hidden">
                             <img 
                               src={img} 
                               alt="Style Match" 
-                              className={`w-full h-full object-cover transition-transform duration-[6s] ease-out ${stackIndex === 0 ? 'scale-105' : 'scale-100'}`} 
+                              className={`w-full h-full object-cover  transition-transform duration-[6s] ease-out ${stackIndex === 0 ? 'scale-105' : 'scale-100'}`} 
                             />
                             
-                            <div className={`absolute top-8 w-full px-6 flex justify-between pointer-events-none transition-opacity duration-300 ${isTop ? 'opacity-100' : 'opacity-0'}`}>
-                              <div className={`border-4 border-red-600/80 text-red-600/80 font-bold px-4 py-2 text-xl tracking-[0.2em] uppercase transform -rotate-12 transition-all duration-500 ease-out backdrop-blur-sm bg-white/10 ${isSwiping && swipeDirection === 'left' ? 'opacity-100 scale-110' : 'opacity-0 scale-90'}`}>
+                            <div className={`absolute top-6 md:top-8 w-full px-4 md:px-6 flex justify-between pointer-events-none transition-opacity duration-300 ${isTop ? 'opacity-100' : 'opacity-0'}`}>
+                              <div className={`border-2 md:border-4 border-red-600/80 text-red-600/80 font-bold px-2 py-1 md:px-4 md:py-2 text-sm md:text-xl tracking-[0.2em] uppercase transform -rotate-12 transition-all duration-500 ease-out backdrop-blur-sm bg-white/10 ${isSwiping && swipeDirection === 'left' ? 'opacity-100 scale-110' : 'opacity-0 scale-90'}`}>
                                 Pass
                               </div>
-                              <div className={`border-4 border-[#8C775D]/90 text-[#8C775D]/90 font-bold px-4 py-2 text-xl tracking-[0.2em] uppercase transform rotate-12 transition-all duration-500 ease-out backdrop-blur-sm bg-white/10 ${isSwiping && swipeDirection === 'right' ? 'opacity-100 scale-110' : 'opacity-0 scale-90'}`}>
+                              <div className={`border-2 md:border-4 border-gray-800 text-gray-800 font-bold px-2 py-1 md:px-4 md:py-2 text-sm md:text-xl tracking-[0.2em] uppercase transform rotate-12 transition-all duration-500 ease-out backdrop-blur-sm bg-white/10 ${isSwiping && swipeDirection === 'right' ? 'opacity-100 scale-110' : 'opacity-0 scale-90'}`}>
                                 Archive
                               </div>
                             </div>
@@ -421,13 +427,14 @@ export default function LandingPage() {
                   </div>
                 </div>
 
+                {/* Desktop Archive Arrow */}
                 <div className="hidden lg:flex flex-col items-center gap-4 opacity-80 z-20 transition-all duration-300">
-                  <svg width="100" height="46" viewBox="0 0 60 28" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" className={`text-[#8C775D] transition-transform duration-500 ${isSwipingOut && swipeDirection === 'right' ? 'translate-x-4 scale-110' : ''}`}>
+                  <svg width="100" height="46" viewBox="0 0 60 28" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" className={`text-gray-600 transition-transform duration-500 ${isSwipingOut && swipeDirection === 'right' ? 'translate-x-4 scale-110' : ''}`}>
                     <path d="M10 24 C 25 24, 42 18, 54 8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M54 8 L 42 6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M54 8 L 52 20" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                  <span className={`font-cursive text-4xl text-[#5C5248] transition-opacity duration-500 ${isSwipingOut && swipeDirection === 'right' ? 'opacity-100' : 'opacity-60'}`}>Archive</span>
+                  <span className={`font-cursive text-4xl text-gray-600 transition-opacity duration-500 ${isSwipingOut && swipeDirection === 'right' ? 'opacity-100' : 'opacity-60'}`}>Archive</span>
                 </div>
 
               </div>
@@ -439,87 +446,93 @@ export default function LandingPage() {
         {/* =========================================
             FINAL CTA & FOOTER
         ========================================= */}
-        <section className="relative py-40 flex flex-col items-center justify-center bg-[#FAF8F5] px-6 text-center overflow-hidden z-10 border-b border-[#D2C8BA]/30">
+        <section className="relative py-40 flex flex-col items-center justify-center bg-gray-50 px-6 text-center overflow-hidden z-10 border-b border-gray-300/30">
           
+          <div className="absolute inset-0 flex items-center opacity-[0.03] pointer-events-none overflow-hidden">
+            <span className="font-editorial text-[40vw] italic text-black animate-[marquee_40s_linear_infinite] whitespace-nowrap">
+              Dryp Dryp Dryp Dryp
+            </span>
+          </div>
+
           <div className="absolute top-[20%] left-[10%] animate-float-slow opacity-30 pointer-events-none">
-            <span className="text-3xl text-[#A69076]">✦</span>
+            <span className="text-3xl text-gray-400">✦</span>
           </div>
           <div className="absolute bottom-[20%] right-[15%] animate-float-slower opacity-20 pointer-events-none">
-            <span className="text-5xl text-[#A69076]">✦</span>
+            <span className="text-5xl text-gray-400">✦</span>
           </div>
           <div className="absolute top-[40%] right-[5%] animate-float-slow opacity-10 pointer-events-none mix-blend-multiply">
-            <div className="h-32 w-32 rounded-full border border-[#A69076]/50"></div>
+            <div className="h-32 w-32 rounded-full border border-gray-400/50"></div>
           </div>
 
-          {/* Left Side Images (4 total) */}
-          <div className="absolute left-[5%] top-[10%] h-[260px] w-[180px] hidden lg:block overflow-hidden opacity-90 animate-float-slow shadow-xl transform -rotate-6 border border-white/60 z-10">
-            <img src="https://images.unsplash.com/photo-1618932260643-eee4a2f652a6?q=80&w=800&auto=format&fit=crop" alt="Curated style left 1" className="h-full w-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700" />
+          {/* Left Side Images (4 total) - Updated for Mobile Visibility */}
+          <div className="absolute left-[-5%] top-[5%] h-[160px] w-[110px] md:left-[5%] md:top-[10%] md:h-[260px] md:w-[180px] block lg:block overflow-hidden opacity-30 md:opacity-90 animate-float-slow shadow-xl transform -rotate-6 border border-gray-300 z-0 md:z-10 pointer-events-none">
+            <img src="https://images.unsplash.com/photo-1618932260643-eee4a2f652a6?q=80&w=800&auto=format&fit=crop" alt="Curated style left 1" className="h-full w-full object-cover   transition-all duration-700" />
           </div>
           
-          <div className="absolute left-[18%] bottom-[15%] h-[200px] w-[150px] hidden lg:block overflow-hidden opacity-80 animate-float-slower shadow-lg transform rotate-3 border border-white/60 z-10">
-            <img src="https://plus.unsplash.com/premium_photo-1675186049419-d48f4b28fe7c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D" alt="Curated style left 2" className="h-full w-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700" />
+          <div className="absolute left-[5%] bottom-[30%] h-[140px] w-[90px] md:left-[18%] md:bottom-[15%] md:h-[200px] md:w-[150px] block lg:block overflow-hidden opacity-20 md:opacity-80 animate-float-slower shadow-lg transform rotate-3 border border-gray-300 z-0 md:z-10 pointer-events-none">
+            <img src="https://plus.unsplash.com/premium_photo-1675186049419-d48f4b28fe7c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D" alt="Curated style left 2" className="h-full w-full object-cover   transition-all duration-700" />
           </div>
 
-          <div className="absolute left-[2%] bottom-[25%] h-[160px] w-[120px] hidden lg:block overflow-hidden opacity-75 animate-float-fast shadow-xl transform -rotate-12 border border-white/60 z-0">
-            <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGNsb3RoZXN8ZW58MHx8MHx8fDA%3D" alt="Curated style left 3" className="h-full w-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700" />
+          <div className="absolute left-[2%] bottom-[25%] h-[160px] w-[120px] hidden lg:block overflow-hidden opacity-75 animate-float-fast shadow-xl transform -rotate-12 border border-gray-300 z-0 pointer-events-none">
+            <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGNsb3RoZXN8ZW58MHx8MHx8fDA%3D" alt="Curated style left 3" className="h-full w-full object-cover   transition-all duration-700" />
           </div>
 
-          <div className="absolute left-[22%] top-[5%] h-[180px] w-[140px] hidden lg:block overflow-hidden opacity-85 animate-float-slower shadow-lg transform rotate-6 border border-white/60 z-0">
-            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop" alt="Curated style left 4" className="h-full w-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700" />
+          <div className="absolute left-[22%] top-[5%] h-[180px] w-[140px] hidden lg:block overflow-hidden opacity-85 animate-float-slower shadow-lg transform rotate-6 border border-gray-300 z-0 pointer-events-none">
+            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop" alt="Curated style left 4" className="h-full w-full object-cover   transition-all duration-700" />
           </div>
 
-          {/* Right Side Images (4 total) */}
-          <div className="absolute right-[8%] top-[15%] h-[220px] w-[160px] hidden lg:block overflow-hidden opacity-85 animate-float-fast shadow-xl transform rotate-6 border border-white/60 z-10">
-            <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=800&auto=format&fit=crop" alt="Curated style right 1" className="h-full w-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700" />
+          {/* Right Side Images (4 total) - Updated for Mobile Visibility */}
+          <div className="absolute right-[-5%] top-[12%] h-[150px] w-[100px] md:right-[8%] md:top-[15%] md:h-[220px] md:w-[160px] block lg:block overflow-hidden opacity-25 md:opacity-85 animate-float-fast shadow-xl transform rotate-6 border border-gray-300 z-0 md:z-10 pointer-events-none">
+            <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=800&auto=format&fit=crop" alt="Curated style right 1" className="h-full w-full object-cover   transition-all duration-700" />
           </div>
 
-          <div className="absolute right-[20%] bottom-[10%] h-[280px] w-[200px] hidden lg:block overflow-hidden opacity-95 animate-float-slow shadow-2xl transform -rotate-3 border border-white/60 z-10">
-            <img src="https://images.unsplash.com/photo-1612423284934-2850a4ea6b0f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzV8fGNsb3RoZXN8ZW58MHx8MHx8fDA%3D" alt="Curated style right 2" className="h-full w-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700" />
+          <div className="absolute right-[-10%] bottom-[15%] h-[200px] w-[140px] md:right-[20%] md:bottom-[10%] md:h-[280px] md:w-[200px] block lg:block overflow-hidden opacity-30 md:opacity-95 animate-float-slow shadow-2xl transform -rotate-3 border border-gray-300 z-0 md:z-10 pointer-events-none">
+            <img src="https://images.unsplash.com/photo-1612423284934-2850a4ea6b0f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzV8fGNsb3RoZXN8ZW58MHx8MHx8fDA%3D" alt="Curated style right 2" className="h-full w-full object-cover   transition-all duration-700" />
           </div>
 
-          <div className="absolute right-[4%] bottom-[30%] h-[240px] w-[140px] hidden lg:block overflow-hidden opacity-75 animate-float-slower shadow-lg transform rotate-12 border border-white/60 z-0">
-            <img src="https://images.unsplash.com/photo-1540221652346-e5dd6b50f3e7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xvdGhlc3xlbnwwfHwwfHx8MA%3D%3D" alt="Curated style right 3" className="h-full w-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700" />
+          <div className="absolute right-[4%] bottom-[30%] h-[240px] w-[140px] hidden lg:block overflow-hidden opacity-75 animate-float-slower shadow-lg transform rotate-12 border border-gray-300 z-0 pointer-events-none">
+            <img src="https://images.unsplash.com/photo-1540221652346-e5dd6b50f3e7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xvdGhlc3xlbnwwfHwwfHx8MA%3D%3D" alt="Curated style right 3" className="h-full w-full object-cover   transition-all duration-700" />
           </div>
 
-          <div className="absolute right-[25%] top-[8%] h-[150px] w-[110px] hidden lg:block overflow-hidden opacity-80 animate-float-fast shadow-md transform -rotate-6 border border-white/60 z-0">
-            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjR8fGNsb3RoZXN8ZW58MHx8MHx8fDA%3D" alt="Curated style right 4" className="h-full w-full object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700" />
+          <div className="absolute right-[25%] top-[8%] h-[150px] w-[110px] hidden lg:block overflow-hidden opacity-80 animate-float-fast shadow-md transform -rotate-6 border border-gray-300 z-0 pointer-events-none">
+            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjR8fGNsb3RoZXN8ZW58MHx8MHx8fDA%3D" alt="Curated style right 4" className="h-full w-full object-cover   transition-all duration-700" />
           </div>
 
-          <h2 className="relative z-10 font-editorial text-5xl md:text-7xl font-light tracking-tight mb-8">
-            Find your <span className="font-cursive text-6xl md:text-8xl text-[#8C775D] lowercase">match.</span>
+          <h2 className="relative z-10 font-editorial text-5xl md:text-7xl font-light tracking-tight mb-8 mt-12 md:mt-0">
+            Find your <span className="font-cursive text-6xl md:text-8xl text-gray-700 lowercase">match.</span>
           </h2>
-          <p className="relative z-10 text-[10px] font-light uppercase tracking-[0.3em] text-[#5C5248] mb-14 max-w-md leading-relaxed">
+          <p className="relative z-10 text-[10px] font-light uppercase tracking-[0.3em] text-gray-500 mb-14 max-w-md leading-relaxed">
             Join the new wave of digital style curation. Your unique fashion identity awaits.
           </p>
           
           <Link
             href="/signup"
-            className="group relative z-10 inline-flex items-center justify-center px-14 py-6 text-[10px] font-bold uppercase tracking-[0.3em] text-white bg-[#1A1A1A] overflow-hidden shadow-2xl shadow-[#1A1A1A]/10 hover:shadow-[#1A1A1A]/20 transition-all duration-500 hover:-translate-y-1"
+            className="group relative z-10 inline-flex items-center justify-center px-14 py-6 text-[10px] font-bold uppercase tracking-[0.3em] text-white bg-black overflow-hidden shadow-2xl shadow-black/10 hover:shadow-black/20 transition-all duration-500 hover:-translate-y-1"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
           >
-            <div className="absolute inset-0 h-full w-full translate-y-full bg-[#8C775D] transition-transform duration-700 ease-[cubic-bezier(0.87,0,0.13,1)] group-hover:translate-y-0" />
+            <div className="absolute inset-0 h-full w-full translate-y-full bg-gray-800 transition-transform duration-700 ease-[cubic-bezier(0.87,0,0.13,1)] group-hover:translate-y-0" />
             <span className="relative z-10 transition-colors duration-500">
               Enter The Feed
             </span>
           </Link>
         </section>
 
-        <footer className="relative z-10 flex w-full flex-col items-center justify-between gap-6 px-6 py-12 md:flex-row md:px-12 bg-[#FAF8F5]">
-          <p className="text-[9px] font-medium tracking-[0.3em] uppercase text-[#5C5248]">
+        <footer className="relative z-10 flex w-full flex-col items-center justify-between gap-6 px-6 py-12 md:flex-row md:px-12 bg-gray-50">
+          <p className="text-[9px] font-medium tracking-[0.3em] uppercase text-gray-500">
             &copy; {new Date().getFullYear()} DRYP SYNDICATE
           </p>
 
-          <div className="flex space-x-12 text-[9px] font-medium tracking-[0.3em] uppercase text-[#5C5248]">
+          <div className="flex space-x-12 text-[9px] font-medium tracking-[0.3em] uppercase text-gray-500">
             <span 
-              className="cursor-pointer transition-colors duration-500 hover:text-[#1A1A1A]"
+              className="cursor-pointer transition-colors duration-500 hover:text-black"
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
             >
               Terms of Service
             </span>
             <span 
-              className="cursor-pointer transition-colors duration-500 hover:text-[#1A1A1A]"
+              className="cursor-pointer transition-colors duration-500 hover:text-black"
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
             >
