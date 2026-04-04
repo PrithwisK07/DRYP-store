@@ -17,6 +17,10 @@ const ProductsPage = () => {
   const [editingProduct, setEditingProduct] = useState<Product | undefined>(undefined);
   const formRef = useRef<{ isSubmitting: boolean; submit: () => void; clearForm: () => void } | null>(null);
 
+  // --- Custom Confirmation State ---
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const fetchProducts = useCallback(async () => {
     if (!user) return;
     setLoading(true);
@@ -24,7 +28,6 @@ const ProductsPage = () => {
       const response = await fetch(
         `${API_BASE_URL}/api/products?vendor=${user._id}`,
       );
-      console.log(user._id);
       const data = await response.json();
       setProducts(data);
     } catch (error) {
@@ -34,30 +37,38 @@ const ProductsPage = () => {
     }
   }, [user]);
 
-  const handleDelete = async (productId: string | undefined) => {
-    if (
-      window.confirm(
-        "Are you certain you wish to remove this piece from your archive?",
-      )
-    ) {
-      try {
-        const response = await fetch(
-          `${API_BASE_URL}/api/products/${productId}`,
-          {
-            method: "DELETE",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+  // Trigger the custom confirmation dialog instead of window.confirm
+  const initiateDelete = (productId: string | undefined) => {
+    if (productId) {
+      setConfirmDeleteId(productId);
+    }
+  };
+
+  // Execute the actual deletion
+  const executeDelete = async () => {
+    if (!confirmDeleteId) return;
+    
+    setIsDeleting(true);
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/api/products/${confirmDeleteId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        );
-        if (response.ok) {
-          fetchProducts();
-        } else {
-          console.error("Failed to delete product");
-        }
-      } catch (error) {
-        console.error("Failed to delete product:", error);
+        },
+      );
+      if (response.ok) {
+        await fetchProducts();
+      } else {
+        console.error("Failed to delete product");
       }
+    } catch (error) {
+      console.error("Failed to delete product:", error);
+    } finally {
+      setIsDeleting(false);
+      setConfirmDeleteId(null);
     }
   };
 
@@ -89,7 +100,6 @@ const ProductsPage = () => {
 
   return (
     <>
-      {/* Injecting our editorial fonts */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -99,6 +109,38 @@ const ProductsPage = () => {
       `,
         }}
       />
+
+      {/* --- CUSTOM DELETION CONFIRMATION DIALOG --- */}
+      {confirmDeleteId && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#050505]/90 backdrop-blur-md transition-all">
+          <div className="flex flex-col items-center justify-center border border-white/20 bg-black p-12 shadow-2xl max-w-lg text-center animate-in zoom-in-95 duration-300">
+            <span className="font-editorial text-4xl italic text-red-600 mb-4">Warning</span>
+            <h3 className="font-editorial text-2xl font-light text-white mb-4">
+              Permanent Deletion
+            </h3>
+            <p className="font-sans text-[10px] uppercase tracking-widest text-gray-400 mb-10 max-w-sm leading-relaxed">
+              You are about to permanently remove this piece from the global archive. This action cannot be reversed.
+            </p>
+            
+            <div className="flex items-center gap-6 w-full">
+              <button
+                onClick={() => setConfirmDeleteId(null)}
+                disabled={isDeleting}
+                className="w-1/2 border border-white/20 py-4 font-sans text-[9px] font-bold uppercase tracking-[0.2em] text-white hover:bg-white/10 transition-colors disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={executeDelete}
+                disabled={isDeleting}
+                className="w-1/2 bg-red-800 py-4 font-sans text-[9px] font-bold uppercase tracking-[0.2em] text-white hover:bg-red-900 transition-colors disabled:bg-gray-800 disabled:text-gray-500"
+              >
+                {isDeleting ? "Removing..." : "Confirm Removal"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="min-h-screen bg-[#FCFCFA] text-black font-sans selection:bg-black selection:text-white px-6 py-12 md:px-16 lg:px-24">
         {/* Minimalist Header */}
@@ -180,7 +222,7 @@ const ProductsPage = () => {
                         Edit
                       </button>
                       <button
-                        onClick={() => handleDelete(product._id)}
+                        onClick={() => initiateDelete(product._id)}
                         className="bg-red-900 px-6 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white hover:bg-red-950 transition-colors w-32"
                       >
                         Remove
