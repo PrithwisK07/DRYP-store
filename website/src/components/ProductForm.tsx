@@ -70,6 +70,13 @@ const TextArea = ({
 const ProductForm = React.forwardRef(
   ({ onSave, product }: { onSave: () => void; product?: Product }, ref) => {
     const { token } = useAuth();
+    
+    // --- New Status State for Alerts ---
+    const [formStatus, setFormStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({
+      type: null,
+      message: ""
+    });
+
     const [formData, setFormData] = useState({
       name: "",
       description: "",
@@ -102,11 +109,13 @@ const ProductForm = React.forwardRef(
         basePrice: "",
       });
       setVariants([{ color: "", sizes: "", price: "", stock: {}, images: [] }]);
+      setFormStatus({ type: null, message: "" });
     };
 
     const handleProductChange = (e) => {
       const { name, value } = e.target;
       setFormData((prev) => ({ ...prev, [name]: value }));
+      if (formStatus.type === 'error') setFormStatus({ type: null, message: "" }); // Clear errors on typing
     };
 
     const handleVariantChange = (index, e) => {
@@ -126,6 +135,7 @@ const ProductForm = React.forwardRef(
         newVariants[index].stock = newStock;
       }
       setVariants(newVariants);
+      if (formStatus.type === 'error') setFormStatus({ type: null, message: "" });
     };
 
     const handleStockChange = (variantIndex, size, value) => {
@@ -173,6 +183,7 @@ const ProductForm = React.forwardRef(
 
     const uploadImage = async (variantIndex, imageFile) => {
       setIsUploading(true);
+      setFormStatus({ type: null, message: "" });
       const formData = new FormData();
       formData.append("image", imageFile);
 
@@ -189,10 +200,11 @@ const ProductForm = React.forwardRef(
           newVariants[variantIndex].images.push(data.url);
           setVariants(newVariants);
         } else {
-          throw new Error(data.message || "Image upload failed");
+          throw new Error(data.message || "Image synchronization failed");
         }
       } catch (error) {
-        alert(`Error uploading image: ${error.message}`);
+        // Replaced alert with elegant status message
+        setFormStatus({ type: 'error', message: `Image processing error: ${error.message}` });
       } finally {
         setIsUploading(false);
       }
@@ -218,6 +230,8 @@ const ProductForm = React.forwardRef(
 
     const handleSubmit = async (e) => {
       if (e) e.preventDefault();
+      setFormStatus({ type: null, message: "" });
+
       if (croppedImage) {
         await uploadImage(croppedImage.variantIndex, croppedImage.file);
         setCroppedImage(null);
@@ -284,18 +298,27 @@ const ProductForm = React.forwardRef(
 
         const result = await res.json();
         if (res.ok) {
-          resetForm();
-          if (onSave) onSave();
+          // Replaced alert with elegant status message and brief delay before closing
+          setFormStatus({ 
+            type: 'success', 
+            message: `Dossier '${formData.name}' successfully ${product?._id ? "updated" : "archived"}.` 
+          });
+          
+          setTimeout(() => {
+            resetForm();
+            if (onSave) onSave();
+          }, 1200); // 1.2s delay so the user can read the success message
+          
         } else {
           throw new Error(
             result.message ||
-              `Failed to ${product?._id ? "update" : "create"} product`,
+              `Failed to ${product?._id ? "update" : "create"} archive entry`,
           );
         }
       } catch (error) {
-        alert(`Error: ${error.message}`);
-      } finally {
-        setIsSubmitting(false);
+        // Replaced alert with elegant error status message
+        setFormStatus({ type: 'error', message: `Network Sync Error: ${error.message}` });
+        setIsSubmitting(false); // Only set false on error, so it stays "submitting" during success delay
       }
     };
 
@@ -347,17 +370,29 @@ const ProductForm = React.forwardRef(
           />
         )}
 
+        {/* --- Dynamic Status Banner --- */}
+        {formStatus.message && (
+          <div className={`border-l-2 p-5 text-sm tracking-wide ${formStatus.type === 'error' ? 'border-red-600 bg-red-50/50' : 'border-black bg-gray-50/50'}`}>
+            <p className={`font-editorial italic text-xl mb-1 ${formStatus.type === 'error' ? 'text-red-700' : 'text-black'}`}>
+              {formStatus.type === 'error' ? 'System Notice' : 'Confirmation'}
+            </p>
+            <p className="text-gray-600 font-light text-xs mt-1">
+              {formStatus.message}
+            </p>
+          </div>
+        )}
+
         {/* --- Core Details --- */}
         <div>
           <div className="grid grid-cols-1 gap-y-6 gap-x-8 md:grid-cols-12">
             <div className="md:col-span-8">
               <Input
-                label="Product Name"
+                label="Piece Name"
                 name="name"
                 value={formData.name}
                 onChange={handleProductChange}
                 placeholder="e.g. Oversized Linen Blazer"
-                disabled={isSubmitting}
+                disabled={isSubmitting || formStatus.type === 'success'}
               />
             </div>
             <div className="md:col-span-4">
@@ -368,17 +403,17 @@ const ProductForm = React.forwardRef(
                 value={formData.basePrice}
                 onChange={handleProductChange}
                 placeholder="0.00"
-                disabled={isSubmitting}
+                disabled={isSubmitting || formStatus.type === 'success'}
               />
             </div>
             <div className="md:col-span-12">
               <TextArea
-                label="Description"
+                label="Conceptual Details"
                 name="description"
                 value={formData.description}
                 onChange={handleProductChange}
                 placeholder="Enter material, cut, and conceptual details..."
-                disabled={isSubmitting}
+                disabled={isSubmitting || formStatus.type === 'success'}
               />
             </div>
             <div className="md:col-span-4">
@@ -388,7 +423,7 @@ const ProductForm = React.forwardRef(
                 value={formData.brand}
                 onChange={handleProductChange}
                 placeholder="Brand Name"
-                disabled={isSubmitting}
+                disabled={isSubmitting || formStatus.type === 'success'}
               />
             </div>
             <div className="md:col-span-4">
@@ -398,7 +433,7 @@ const ProductForm = React.forwardRef(
                 value={formData.category}
                 onChange={handleProductChange}
                 placeholder="e.g. Outerwear"
-                disabled={isSubmitting}
+                disabled={isSubmitting || formStatus.type === 'success'}
               />
             </div>
             <div className="md:col-span-4">
@@ -408,7 +443,7 @@ const ProductForm = React.forwardRef(
                 value={formData.tags}
                 onChange={handleProductChange}
                 placeholder="SS26, Linen, Tailored"
-                disabled={isSubmitting}
+                disabled={isSubmitting || formStatus.type === 'success'}
               />
             </div>
           </div>
@@ -435,7 +470,7 @@ const ProductForm = React.forwardRef(
                       type="button"
                       onClick={() => removeVariant(index)}
                       className="font-sans text-[9px] font-bold uppercase tracking-[0.2em] text-red-500 hover:text-red-800 transition-colors"
-                      disabled={isSubmitting}
+                      disabled={isSubmitting || formStatus.type === 'success'}
                     >
                       Remove Variant
                     </button>
@@ -450,7 +485,7 @@ const ProductForm = React.forwardRef(
                       value={variant.color}
                       onChange={(e) => handleVariantChange(index, e)}
                       placeholder="e.g. Midnight Onyx"
-                      disabled={isSubmitting}
+                      disabled={isSubmitting || formStatus.type === 'success'}
                     />
                   </div>
                   <div className="md:col-span-4">
@@ -460,7 +495,7 @@ const ProductForm = React.forwardRef(
                       value={variant.sizes}
                       onChange={(e) => handleVariantChange(index, e)}
                       placeholder="36, 38, 40"
-                      disabled={isSubmitting}
+                      disabled={isSubmitting || formStatus.type === 'success'}
                     />
                   </div>
                   <div className="md:col-span-4">
@@ -471,7 +506,7 @@ const ProductForm = React.forwardRef(
                       value={variant.price}
                       onChange={(e) => handleVariantChange(index, e)}
                       placeholder="Leaves blank for base"
-                      disabled={isSubmitting}
+                      disabled={isSubmitting || formStatus.type === 'success'}
                     />
                   </div>
 
@@ -493,7 +528,7 @@ const ProductForm = React.forwardRef(
                               handleStockChange(index, size, e.target.value)
                             }
                             placeholder="0"
-                            disabled={isSubmitting}
+                            disabled={isSubmitting || formStatus.type === 'success'}
                           />
                         ))}
                       </div>
@@ -511,14 +546,14 @@ const ProductForm = React.forwardRef(
                     </label>
                     <div className="flex flex-col gap-6">
                       <div className="flex items-center gap-4">
-                        <label className="cursor-pointer bg-black text-white px-6 py-3 font-sans text-[9px] font-bold uppercase tracking-[0.2em] hover:bg-zinc-800 transition-colors">
+                        <label className={`cursor-pointer px-6 py-3 font-sans text-[9px] font-bold uppercase tracking-[0.2em] transition-colors ${isSubmitting || formStatus.type === 'success' ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-black text-white hover:bg-zinc-800'}`}>
                           <span>Upload Files</span>
                           <input
                             type="file"
                             multiple
                             onChange={(e) => handleImageSelect(index, e)}
                             className="hidden"
-                            disabled={isSubmitting}
+                            disabled={isSubmitting || formStatus.type === 'success'}
                           />
                         </label>
                         {isUploading && (
@@ -542,18 +577,19 @@ const ProductForm = React.forwardRef(
                               sizes="(max-width: 768px) 96px, 128px"
                             />
 
-                            <div className="absolute inset-0 bg-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  handleRemoveImage(index, imgIndex)
-                                }
-                                className="font-sans text-[9px] font-bold uppercase tracking-[0.2em] text-red-600 hover:text-red-900"
-                                disabled={isSubmitting}
-                              >
-                                Remove
-                              </button>
-                            </div>
+                            {(!isSubmitting && formStatus.type !== 'success') && (
+                              <div className="absolute inset-0 bg-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    handleRemoveImage(index, imgIndex)
+                                  }
+                                  className="font-sans text-[9px] font-bold uppercase tracking-[0.2em] text-red-600 hover:text-red-900"
+                                >
+                                  Remove
+                                </button>
+                              </div>
+                            )}
                           </div>
                         ))}
                       </div>
@@ -567,8 +603,8 @@ const ProductForm = React.forwardRef(
           <button
             type="button"
             onClick={addVariant}
-            className="mt-8 w-full border border-black bg-transparent py-4 font-sans text-[10px] font-medium uppercase tracking-[0.3em] text-black transition-colors duration-300 hover:bg-black hover:text-white"
-            disabled={isSubmitting}
+            className="mt-8 w-full border border-black bg-transparent py-4 font-sans text-[10px] font-medium uppercase tracking-[0.3em] text-black transition-colors duration-300 hover:bg-black hover:text-white disabled:border-gray-300 disabled:text-gray-400 disabled:hover:bg-transparent"
+            disabled={isSubmitting || formStatus.type === 'success'}
           >
             + Add New Variant
           </button>
