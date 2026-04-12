@@ -108,7 +108,6 @@ const PORT = process.env.PORT || 8080; // Backend runs on port 8080
     );
   } catch (error) {
     console.warn("Starting server without database connection:", error.message);
-    process.exit(1);
   }
 })();
 
